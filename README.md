@@ -1,6 +1,4 @@
 # veterinary-auth
-
-# veterinary-auth
 VeterinariaApp
 
 _La funcion del microservicio "veterinary-auth" se encarga de **registrar** a un **Usuario** en la que se guardara los datos como **nombre**, **mail**, **contraseña**, y ademas se le asignara un **Token** el cual podra **refrescar** (actualizar token). Este token contener información que verifica la identidad de un usuario y sus permisos, lo que le servira para poder continuar con peticiones a otros microservicios. Por otro lado el Usuario podra **loguearse**, **verificarse** y **eliminarse**._ 
