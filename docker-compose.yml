@@ -1,0 +1,55 @@
+version: '0.19'
+
+services:
+
+  
+  redis:
+    build:
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
+    container_name: redis_Veterinary-auth
+    ports:
+      - "6379:6379" 
+    networks:
+      - Veterinaria-net
+
+  db:
+    build: 
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    container_name: veterinary_auth-db
+    environment:
+      - "docker/db/.envvars"
+    ports:
+      - "5432:5432"
+    networks:
+      - Veterinaria-net
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    container_name: veterinary-api
+    depends_on:
+      - db
+      - redis
+    links:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      - "docker/api/.envvars"
+    networks:
+      - Veterinaria-net
+    volumes:
+      - .:/app
+
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  Veterinaria-net:
+    driver: bridge
